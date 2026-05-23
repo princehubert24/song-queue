@@ -5,7 +5,7 @@
 struct Song {
     char title[100];
     char artist[100];
-    int duration;
+    float duration;
     struct Song* next;
 };
 
@@ -13,7 +13,7 @@ struct Song* head = NULL;
 struct Song* tail = NULL;
 int size = 0;
 
-struct Song* createNode(char title[], char artist[], int duration) {
+struct Song* createNode(char title[], char artist[], float duration) {
     struct Song* newSong = (struct Song*)malloc(sizeof(struct Song));
 
     strcpy(newSong->title, title);
@@ -28,7 +28,7 @@ int isEmpty() {
     return head == NULL;
 }
 
-void addSong(char title[], char artist[], int duration) {
+void addSong(char title[], char artist[], float duration) {
     struct Song* newSong = createNode(title, artist, duration);
 
     if (isEmpty()) {
@@ -76,7 +76,7 @@ void viewPlaylist() {
     printf("\n--- Current Playlist (Next Up is Song 1) ---\n");
 
     while (current != NULL) {
-        printf("[%d] %s (%s) - %d sec\n",
+        printf("[%d] %s (%s) - %.1f min\n",
                i,
                current->title,
                current->artist,
@@ -91,10 +91,10 @@ void viewPlaylist() {
 
 void getTotalDuration() {
     struct Song* current = head;
-    int total = 0;
+    float total = 0;
 
     if (isEmpty()) {
-        printf("Total Duration: 0 seconds\n");
+        printf("Total Duration: 0 minutes\n");
         return;
     }
 
@@ -103,8 +103,7 @@ void getTotalDuration() {
         current = current->next;
     }
 
-    printf("Total Duration of Playlist: %d seconds (%d min, %d sec)\n",
-           total, total / 60, total % 60);
+    printf("Total Duration of Playlist: %.1f minutes\n", total);
 }
 
 int main() {
@@ -156,25 +155,25 @@ int main() {
         "The Weeknd"
     };
 
-    int duration[20] = {
-        482, 355, 181, 431, 390,
-        240, 200, 285, 301, 263,
-        204, 187, 257, 212, 244,
-        177, 186, 191, 198, 215
+    float duration[20] = {
+        8.0, 5.9, 3.0, 7.2, 6.5,
+        4.0, 3.3, 4.7, 5.0, 4.4,
+        3.4, 3.1, 4.2, 3.5, 4.1,
+        3.0, 3.1, 3.2, 3.3, 3.6
     };
 
-    printf("*** MUSIC PLAYLIST (LINKED LIST QUEUE) ***\n");
+    printf(" MUSIC PLAYLIST (LINKED LIST QUEUE) \n");
 
     do {
-        printf("\n--- Initial Song Library ---\n");
+        printf("\n Initial Song Library \n");
         for (int i = 0; i < 20; i++) {
-            printf("[%d] %s (%s) - %d sec\n",
+            printf("[%d] %s (%s) - %.1f min\n",
                    i + 1, title[i], artist[i], duration[i]);
         }
 
         printf("-----------------------------\n");
 
-        printf("\n** Playlist Menu **\n");
+        printf("\n Playlist Menu \n");
         printf("1. Add Song to Playlist (Enqueue)\n");
         printf("2. View Current Playlist\n");
         printf("3. Play Next Song (Dequeue)\n");
@@ -197,7 +196,7 @@ int main() {
         }
         else if (choice == 2) {
             viewPlaylist();
-        }
+        }\
         else if (choice == 3) {
             playNext();
         }
